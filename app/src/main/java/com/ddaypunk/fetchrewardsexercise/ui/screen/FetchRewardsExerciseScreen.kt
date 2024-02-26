@@ -1,6 +1,5 @@
 package com.ddaypunk.fetchrewardsexercise.ui.screen
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
@@ -21,7 +20,7 @@ fun FetchRewardsExerciseScreen(
     MaterialTheme {
         LazyColumn(
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 16.dp),
+                .padding(horizontal = 8.dp, vertical = 16.dp),
         ) {
             state.data.keys.forEach { listId ->
                 item {
