@@ -50,6 +50,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+//    testOptions {
+//        unitTests.all {
+//            useJunitPlatform()
+//        }
+//    }
 }
 
 dependencies {
@@ -73,7 +78,10 @@ dependencies {
     implementation("io.ktor:ktor-client-logging-jvm:1.5.0")
     implementation("com.google.dagger:hilt-android:2.50")
     kapt("com.google.dagger:hilt-compiler:2.50")
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.2")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6")
+    testImplementation("com.willowtreeapps.assertk:assertk:0.28.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
@@ -85,4 +93,8 @@ dependencies {
 // Allow references to generated code
 kapt {
     correctErrorTypes = true
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
