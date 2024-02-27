@@ -22,13 +22,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ddaypunk.fetchrewardsexercise.R
-import com.ddaypunk.fetchrewardsexercise.data.model.FetchHiringDataModel
+import com.ddaypunk.fetchrewardsexercise.data.model.HiringDataModel
 import com.ddaypunk.fetchrewardsexercise.ui.theme.Typography
 
 @Immutable
 data class ListCardState(
     val title: String,
-    val entries: List<FetchHiringDataModel>?
+    val entries: List<HiringDataModel>?
 )
 
 @Composable
