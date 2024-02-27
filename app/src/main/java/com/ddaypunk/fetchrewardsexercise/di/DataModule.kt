@@ -1,5 +1,7 @@
 package com.ddaypunk.fetchrewardsexercise.di
 
+import com.ddaypunk.fetchrewardsexercise.data.service.ApiClient
+import com.ddaypunk.fetchrewardsexercise.data.service.KtorApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,4 +30,8 @@ object DataModule {
             }
         }
     }
+
+    @Singleton
+    @Provides
+    fun provideApiClient(httpClient: HttpClient): ApiClient = KtorApiClient(httpClient)
 }

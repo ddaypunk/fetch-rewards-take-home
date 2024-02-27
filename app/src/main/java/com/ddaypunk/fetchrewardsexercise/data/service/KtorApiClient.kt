@@ -7,9 +7,8 @@ import io.ktor.client.request.url
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import java.io.IOException
-import javax.inject.Inject
 
-class KtorApiClient @Inject constructor(
+class KtorApiClient(
     private val httpClient: HttpClient
 ) : ApiClient {
 
