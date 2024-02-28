@@ -24,23 +24,44 @@ class MainScreenViewModel @Inject constructor(
         viewModelScope.launch {
             val data = repository.retrieve()
             val state = mapDataToState(data)
-            _uiState.update { UiState.Success(state) }
+            _uiState.update { UiState.Ready(state) }
         }
     }
 
-    private fun mapDataToState(data: Map<String, List<HiringDataModel>>): List<ListCardState> {
-        return data.map { entry ->
+    private fun onUserInput(userInput: UserInput) =
+        when (userInput) {
+            is UserInput.CardToggled -> handleCardToggled(userInput.id)
+        }
+
+    private fun handleCardToggled(id: String) =
+        _uiState.update { uiState ->
+            val cardStates = (uiState as UiState.Ready).cardStates.toMutableList()
+            val index = cardStates.indexOfFirst { card -> card.title == id }
+            val newCard = cardStates[index].copy(isExpanded = !cardStates[index].isExpanded)
+            cardStates[index] = newCard
+
+            uiState.copy(
+                cardStates = cardStates.toList()
+            )
+        }
+
+    private fun mapDataToState(data: Map<String, List<HiringDataModel>>) =
+        data.map { entry ->
             ListCardState(
                 title = entry.key,
                 isExpanded = false,
-                entries = entry.value.mapNotNull { it.name }
+                entries = entry.value.mapNotNull { it.name },
+                onClick = { onUserInput(UserInput.CardToggled(entry.key)) }
             )
         }
-    }
 }
 
 sealed class UiState {
     data object Loading : UiState()
     data object Error : UiState()
-    data class Success(val cardStates: List<ListCardState>) : UiState()
+    data class Ready(val cardStates: List<ListCardState>) : UiState()
+}
+
+sealed class UserInput {
+    data class CardToggled(val id: String) : UserInput()
 }

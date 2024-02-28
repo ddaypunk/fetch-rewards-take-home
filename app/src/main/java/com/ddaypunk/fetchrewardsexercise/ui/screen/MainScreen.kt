@@ -23,7 +23,7 @@ fun MainScreen(
     when(val state = viewModel.uiState.collectAsState().value) {
         UiState.Error -> TODO()
         UiState.Loading -> Loading()
-        is UiState.Success -> MainScreenReady(state.cardStates)
+        is UiState.Ready -> MainScreenReady(state.cardStates)
     }
 }
 

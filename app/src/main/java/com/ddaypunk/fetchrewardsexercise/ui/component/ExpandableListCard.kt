@@ -12,10 +12,6 @@ import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -28,14 +24,14 @@ import com.ddaypunk.fetchrewardsexercise.ui.theme.Typography
 data class ListCardState(
     val title: String,
     val isExpanded: Boolean,
-    val entries: List<String>?
+    val entries: List<String>?,
+    val onClick: () -> Unit
 )
 
 @Composable
 fun ExpandableListCard(
     state: ListCardState
 ) {
-    var isExpanded by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -50,8 +46,10 @@ fun ExpandableListCard(
                     style = Typography.titleLarge,
                     textAlign = TextAlign.Center,
                 )
-                IconToggleButton(checked = isExpanded, onCheckedChange = { isExpanded = !isExpanded }) {
-                    when(isExpanded) {
+                IconToggleButton(
+                    checked = state.isExpanded,
+                    onCheckedChange = { state.onClick.invoke() }) {
+                    when (state.isExpanded) {
                         false -> Icon(
                             painterResource(id = R.drawable.ic_expand_more),
                             contentDescription = "Show list of names"
@@ -66,7 +64,7 @@ fun ExpandableListCard(
 
             }
 
-            AnimatedVisibility(visible = isExpanded) {
+            AnimatedVisibility(visible = state.isExpanded) {
                 Column(modifier = Modifier.padding(bottom = 8.dp)) {
                     state.entries?.forEach { name ->
                         Text(

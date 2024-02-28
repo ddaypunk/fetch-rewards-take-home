@@ -43,18 +43,13 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.10"
     }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-//    testOptions {
-//        unitTests.all {
-//            useJunitPlatform()
-//        }
-//    }
 }
 
 dependencies {
@@ -68,13 +63,10 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-//    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-//    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("io.ktor:ktor-client-core:1.6.4")
     implementation("io.ktor:ktor-client-android:1.6.4")
     implementation("io.ktor:ktor-client-json:1.6.4")
     implementation("io.ktor:ktor-client-serialization:1.6.4")
-//    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("io.ktor:ktor-client-logging-jvm:1.5.0")
     implementation("com.google.dagger:hilt-android:2.50")
     implementation("org.slf4j:slf4j-simple:1.7.36")
