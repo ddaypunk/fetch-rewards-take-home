@@ -2,6 +2,7 @@ package com.ddaypunk.fetchrewardsexercise.hiring.presentation.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ddaypunk.fetchrewardsexercise.core.client.ApiResponse
 import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel
 import com.ddaypunk.fetchrewardsexercise.hiring.data.repository.HiringDataRepository
 import com.ddaypunk.fetchrewardsexercise.hiring.presentation.component.ListCardState
@@ -23,10 +24,23 @@ class MainScreenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            val data = repository.retrieve()
+            val response = repository.retrieve()
+
             delay(2_000) // to simulate loading state
-            val state = mapDataToState(data)
-            _uiState.update { UiState.Ready(state) }
+            when (response) {
+                is ApiResponse.Error -> {
+                    response.throwable?.message?.let { nonNullMessage ->
+                        _uiState.update { UiState.Error(nonNullMessage) }
+                    }
+                }
+
+                is ApiResponse.Success -> {
+                    response.data?.let { nonNullResponseData ->
+                        val state = mapDataToState(nonNullResponseData)
+                        _uiState.update { UiState.Ready(state) }
+                    }
+                }
+            }
         }
     }
 
@@ -60,7 +74,7 @@ class MainScreenViewModel @Inject constructor(
 
 sealed class UiState {
     data object Loading : UiState()
-    data object Error : UiState()
+    data class Error(val error: String) : UiState()
     data class Ready(val cardStates: List<ListCardState>) : UiState()
 }
 

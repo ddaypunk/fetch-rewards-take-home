@@ -1,16 +1,15 @@
 package com.ddaypunk.fetchrewardsexercise.hiring.presentation.screen
 
-import androidx.compose.foundation.layout.Box
+import ErrorScreen
+import LoadingScreen
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -27,9 +26,9 @@ fun MainScreen(
         color = colorScheme.background
     ) {
         when (val state = viewModel.uiState.collectAsState().value) {
-            UiState.Error -> TODO()
-            UiState.Loading -> Loading()
+            UiState.Loading -> LoadingScreen()
             is UiState.Ready -> MainScreenReady(state.cardStates)
+            is UiState.Error -> ErrorScreen(state.error)
         }
     }
 }
@@ -48,21 +47,6 @@ fun MainScreenReady(cardStates: List<ListCardState>) {
                     )
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun Loading() {
-    MaterialTheme {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            CircularProgressIndicator(
-                color = colorScheme.surfaceTint,
-                strokeWidth = 4.dp
-            )
         }
     }
 }

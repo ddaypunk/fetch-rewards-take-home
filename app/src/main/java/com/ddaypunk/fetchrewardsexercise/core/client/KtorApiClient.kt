@@ -11,8 +11,6 @@ import java.io.IOException
 class KtorApiClient(
     private val httpClient: HttpClient
 ) : ApiClient {
-
-    // TODO: Return Result here?
     override suspend fun retrieve(): List<HiringDataModel> {
         val result = try {
             httpClient.get<List<HiringDataModel>> {

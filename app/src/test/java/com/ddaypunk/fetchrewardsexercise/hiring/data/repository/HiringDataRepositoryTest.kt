@@ -21,14 +21,14 @@ class HiringDataRepositoryTest {
         @Test
         fun `when invoking retrieve, then the received data has correctly sorted unique keys`() =
             runTest {
-                val actual = subject.retrieve()
+                val actual = subject.retrieve().data?.keys
 
-                assertThat(actual.keys).isEqualTo(setOf("1", "2", "3"))
+                assertThat(actual).isEqualTo(setOf("1", "2", "3"))
             }
 
         @Test
         fun `when invoking retrieve, then received data contains no blank names`() = runTest {
-            val actual = subject.retrieve()["1"]
+            val actual = subject.retrieve().data?.get("1")
 
             assertThat(actual).isNotNull().isEqualTo(
                 listOf(
@@ -43,7 +43,7 @@ class HiringDataRepositoryTest {
 
         @Test
         fun `when invoking retrieve, then received data contains no null names`() = runTest {
-            val actual = subject.retrieve()["2"]
+            val actual = subject.retrieve().data?.get("2")
 
             assertThat(actual).isNotNull().isEqualTo(
                 listOf(
@@ -58,7 +58,7 @@ class HiringDataRepositoryTest {
 
         @Test
         fun `when invoking retrieve, then received data is ordered by name`() = runTest {
-            val actual = subject.retrieve()["3"]
+            val actual = subject.retrieve().data?.get("3")
 
             assertThat(actual).isNotNull().isEqualTo(
                 listOf(
