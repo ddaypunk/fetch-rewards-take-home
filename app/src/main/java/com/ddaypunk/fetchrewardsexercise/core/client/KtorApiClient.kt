@@ -1,6 +1,6 @@
-package com.ddaypunk.fetchrewardsexercise.data.service
+package com.ddaypunk.fetchrewardsexercise.core.client
 
-import com.ddaypunk.fetchrewardsexercise.data.model.HiringDataModel
+import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.url

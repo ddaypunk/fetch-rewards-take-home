@@ -1,4 +1,4 @@
-package com.ddaypunk.fetchrewardsexercise.ui.component
+package com.ddaypunk.fetchrewardsexercise.hiring.presentation.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement

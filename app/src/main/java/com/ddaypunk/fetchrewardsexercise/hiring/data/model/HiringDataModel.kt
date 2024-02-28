@@ -1,4 +1,4 @@
-package com.ddaypunk.fetchrewardsexercise.data.model
+package com.ddaypunk.fetchrewardsexercise.hiring.data.model
 
 import kotlinx.serialization.Serializable
 

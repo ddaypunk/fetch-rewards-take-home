@@ -1,7 +1,7 @@
-package com.ddaypunk.fetchrewardsexercise.di
+package com.ddaypunk.fetchrewardsexercise.core.di
 
-import com.ddaypunk.fetchrewardsexercise.data.service.ApiClient
-import com.ddaypunk.fetchrewardsexercise.data.service.KtorApiClient
+import com.ddaypunk.fetchrewardsexercise.core.client.ApiClient
+import com.ddaypunk.fetchrewardsexercise.core.client.KtorApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DataModule {
+object CoreModule {
 
     @Singleton
     @Provides

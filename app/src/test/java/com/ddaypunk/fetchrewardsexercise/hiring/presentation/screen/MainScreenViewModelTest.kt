@@ -1,9 +1,10 @@
-package com.ddaypunk.fetchrewardsexercise.ui.screen
+package com.ddaypunk.fetchrewardsexercise.hiring.presentation.screen
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import com.ddaypunk.fetchrewardsexercise.data.model.HiringDataModel
-import com.ddaypunk.fetchrewardsexercise.data.service.HiringDataRepository
+import com.ddaypunk.fetchrewardsexercise.hiring.core.ViewModelTest
+import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel
+import com.ddaypunk.fetchrewardsexercise.hiring.data.repository.HiringDataRepository
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest

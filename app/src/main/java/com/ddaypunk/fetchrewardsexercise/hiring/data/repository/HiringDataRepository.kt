@@ -1,6 +1,7 @@
-package com.ddaypunk.fetchrewardsexercise.data.service
+package com.ddaypunk.fetchrewardsexercise.hiring.data.repository
 
-import com.ddaypunk.fetchrewardsexercise.data.model.HiringDataModel
+import com.ddaypunk.fetchrewardsexercise.core.client.ApiClient
+import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel
 import javax.inject.Inject
 
 class HiringDataRepository @Inject constructor(
@@ -20,3 +21,4 @@ class HiringDataRepository @Inject constructor(
         }
     }
 }
+

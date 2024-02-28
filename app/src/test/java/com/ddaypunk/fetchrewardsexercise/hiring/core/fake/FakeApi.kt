@@ -1,6 +1,7 @@
-package com.ddaypunk.fetchrewardsexercise.data.service
+package com.ddaypunk.fetchrewardsexercise.hiring.core.fake
 
-import com.ddaypunk.fetchrewardsexercise.data.model.HiringDataModel
+import com.ddaypunk.fetchrewardsexercise.core.client.ApiClient
+import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel
 
 class FakeApiClient : ApiClient {
     override suspend fun retrieve(): List<HiringDataModel> {
