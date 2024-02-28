@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddaypunk.fetchrewardsexercise.data.model.HiringDataModel
 import com.ddaypunk.fetchrewardsexercise.data.service.HiringDataRepository
+import com.ddaypunk.fetchrewardsexercise.ui.component.ListCardState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,13 +23,24 @@ class MainScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val data = repository.retrieve()
-//            delay(2_000) // simulate loading state
-            _uiState.update { UiState.Success(data) }
+            val state = mapDataToState(data)
+            _uiState.update { UiState.Success(state) }
+        }
+    }
+
+    private fun mapDataToState(data: Map<String, List<HiringDataModel>>): List<ListCardState> {
+        return data.map { entry ->
+            ListCardState(
+                title = entry.key,
+                isExpanded = false,
+                entries = entry.value.mapNotNull { it.name }
+            )
         }
     }
 }
+
 sealed class UiState {
     data object Loading : UiState()
     data object Error : UiState()
-    data class Success(val data: Map<String, List<HiringDataModel>>) : UiState()
+    data class Success(val cardStates: List<ListCardState>) : UiState()
 }

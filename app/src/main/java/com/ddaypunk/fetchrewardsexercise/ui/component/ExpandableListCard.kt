@@ -22,13 +22,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ddaypunk.fetchrewardsexercise.R
-import com.ddaypunk.fetchrewardsexercise.data.model.HiringDataModel
 import com.ddaypunk.fetchrewardsexercise.ui.theme.Typography
 
 @Immutable
 data class ListCardState(
     val title: String,
-    val entries: List<HiringDataModel>?
+    val isExpanded: Boolean,
+    val entries: List<String>?
 )
 
 @Composable
@@ -68,9 +68,9 @@ fun ExpandableListCard(
 
             AnimatedVisibility(visible = isExpanded) {
                 Column(modifier = Modifier.padding(bottom = 8.dp)) {
-                    state.entries?.forEach { model ->
+                    state.entries?.forEach { name ->
                         Text(
-                            text = "${model.name}",
+                            text = name,
                             style = Typography.bodyMedium,
                             modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
                         )
