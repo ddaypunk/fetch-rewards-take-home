@@ -1,13 +1,15 @@
 package com.ddaypunk.fetchrewardsexercise.hiring.presentation.screen
 
 import assertk.assertThat
-import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import com.ddaypunk.fetchrewardsexercise.core.client.ApiResponse
 import com.ddaypunk.fetchrewardsexercise.hiring.core.ViewModelTest
 import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel
 import com.ddaypunk.fetchrewardsexercise.hiring.data.repository.HiringDataRepository
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
 
@@ -48,6 +50,15 @@ class MainScreenViewModelTest : ViewModelTest() {
     fun firstViewModelTest() = runTest {
         coEvery { mockRepository.retrieve() } returns mockData
         val subject = MainScreenViewModel(mockRepository)
-        assertThat(subject.uiState.value).isEqualTo(UiState.Loading)
+        assertThat(subject.uiState.value).isInstanceOf(UiState.Loading::class)
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun secondViewModelTest() = runTest {
+        coEvery { mockRepository.retrieve() } returns mockData
+        val subject = MainScreenViewModel(mockRepository)
+        advanceUntilIdle()
+        assertThat(subject.uiState.value).isInstanceOf(UiState.Ready::class)
     }
 }
