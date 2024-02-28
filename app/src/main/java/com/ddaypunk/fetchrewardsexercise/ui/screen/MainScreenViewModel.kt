@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.ddaypunk.fetchrewardsexercise.data.model.HiringDataModel
 import com.ddaypunk.fetchrewardsexercise.data.service.HiringDataRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +22,7 @@ class MainScreenViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val data = repository.retrieve()
-            delay(2_000) // simulate loading state
+//            delay(2_000) // simulate loading state
             _uiState.update { UiState.Success(data) }
         }
     }
