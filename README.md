@@ -3,6 +3,10 @@
 A take home app for Fetch Rewards interview querying a single endpoint for data to display to a
 single screen with data from endpoint, according to described business logic.
 
+
+https://github.com/ddaypunk/fetch-rewards-take-home/assets/2991755/6a0d8668-70d8-4ec0-9756-fe081cc65c49
+
+
 ## Stack/Technologies
 
 - **Android**
