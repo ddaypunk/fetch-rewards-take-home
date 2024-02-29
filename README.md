@@ -1,7 +1,7 @@
 # fetch-rewards-take-home
 
 A take home app for Fetch Rewards interview querying a single endpoint for data to display to a
-single screen
+single screen with data from endpoint, according to described business logic.
 
 ## Stack/Technologies
 
@@ -12,6 +12,7 @@ single screen
 - **Ktor** for HTTP client
 - **MVVM** architecture
 - **Junit5** for Unit Tests
+- **Junit4** and **Compose Espresso** for Android Instrumented Tests
 - **AssertK** for assertions
 
 ## Clean Package Structure
@@ -29,3 +30,9 @@ single screen
 ### UnitTest
 
 - set to mimic application structure
+
+### AndroidTest
+
+- set to mimic application structure
+- very simple test as the viewmodel controls the click behavior of the card elements currently
+  - so it just verifies the content that is seen
