@@ -6,15 +6,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ddaypunk.fetchrewardsexercise.R
@@ -37,29 +38,32 @@ fun ExpandableListCard(
     ) {
         Column {
             Row(
-                modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .toggleable(
+                        value = state.isExpanded,
+                        role = Role.DropdownList
+                    ) {
+                        state.onClick.invoke()
+                    }
             ) {
                 Text(
                     text = "ListId = ${state.title}",
                     style = Typography.titleLarge,
                     textAlign = TextAlign.Center,
                 )
-                IconToggleButton(
-                    checked = state.isExpanded,
-                    onCheckedChange = { state.onClick.invoke() }) {
-                    when (state.isExpanded) {
-                        false -> Icon(
-                            painterResource(id = R.drawable.ic_expand_more),
-                            contentDescription = "Show list of names"
-                        )
+                when (state.isExpanded) {
+                    false -> Icon(
+                        painterResource(id = R.drawable.ic_expand_more),
+                        contentDescription = "Show list of names"
+                    )
 
-                        true -> Icon(
-                            painterResource(id = R.drawable.ic_expand_less),
-                            contentDescription = "Hide list of names"
-                        )
-                    }
+                    true -> Icon(
+                        painterResource(id = R.drawable.ic_expand_less),
+                        contentDescription = "Hide list of names"
+                    )
                 }
 
             }

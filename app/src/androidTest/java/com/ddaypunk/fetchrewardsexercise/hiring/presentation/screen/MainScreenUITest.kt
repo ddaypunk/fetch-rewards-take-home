@@ -4,7 +4,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.platform.app.InstrumentationRegistry
 import com.ddaypunk.fetchrewardsexercise.hiring.presentation.component.ListCardState
 import org.junit.Assert.*
 import org.junit.Rule
@@ -21,7 +20,7 @@ class MainScreenUITest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    val cardStates = listOf(
+    private val cardStates = listOf(
         ListCardState(
             title = "1",
             isExpanded = true,
@@ -53,15 +52,12 @@ class MainScreenUITest {
 
     @Test
     fun verifyMainScreenDisplays() {
-
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.ddaypunk.fetchrewardsexercise", appContext.packageName)
-
         with(composeTestRule) {
             setContent {
                 MainScreenReady(cardStates = cardStates)
             }
+
+            // Given the viewmodel controls the click behavior, we can't click here
 
             onNodeWithText("hello 1").assertIsDisplayed()
             onNodeWithText("there 10").assertIsDisplayed()
