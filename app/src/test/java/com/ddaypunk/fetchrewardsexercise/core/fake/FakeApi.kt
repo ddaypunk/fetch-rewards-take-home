@@ -1,4 +1,4 @@
-package com.ddaypunk.fetchrewardsexercise.hiring.core.fake
+package com.ddaypunk.fetchrewardsexercise.core.fake
 
 import com.ddaypunk.fetchrewardsexercise.core.client.ApiClient
 import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel

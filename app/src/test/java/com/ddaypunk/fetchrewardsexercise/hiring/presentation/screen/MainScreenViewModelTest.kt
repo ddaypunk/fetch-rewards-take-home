@@ -6,10 +6,10 @@ import assertk.assertions.isEqualTo
 import assertk.assertions.isFalse
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isTrue
+import com.ddaypunk.fetchrewardsexercise.core.ViewModelTest
 import com.ddaypunk.fetchrewardsexercise.core.client.ApiResponse
 import com.ddaypunk.fetchrewardsexercise.core.client.DataClientError
 import com.ddaypunk.fetchrewardsexercise.core.client.DataClientException
-import com.ddaypunk.fetchrewardsexercise.hiring.core.ViewModelTest
 import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel
 import com.ddaypunk.fetchrewardsexercise.hiring.data.repository.HiringDataRepository
 import io.mockk.coEvery

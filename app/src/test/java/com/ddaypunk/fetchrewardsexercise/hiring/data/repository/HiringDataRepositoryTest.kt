@@ -3,7 +3,7 @@ package com.ddaypunk.fetchrewardsexercise.hiring.data.repository
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isNotNull
-import com.ddaypunk.fetchrewardsexercise.hiring.core.fake.FakeApiClient
+import com.ddaypunk.fetchrewardsexercise.core.fake.FakeApiClient
 import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.DisplayName

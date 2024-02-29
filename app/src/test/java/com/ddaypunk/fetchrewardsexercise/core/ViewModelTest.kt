@@ -1,4 +1,4 @@
-package com.ddaypunk.fetchrewardsexercise.hiring.core
+package com.ddaypunk.fetchrewardsexercise.core
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
