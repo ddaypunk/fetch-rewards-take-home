@@ -7,6 +7,8 @@ import assertk.assertions.isFalse
 import assertk.assertions.isInstanceOf
 import assertk.assertions.isTrue
 import com.ddaypunk.fetchrewardsexercise.core.client.ApiResponse
+import com.ddaypunk.fetchrewardsexercise.core.client.DataClientError
+import com.ddaypunk.fetchrewardsexercise.core.client.DataClientException
 import com.ddaypunk.fetchrewardsexercise.hiring.core.ViewModelTest
 import com.ddaypunk.fetchrewardsexercise.hiring.data.model.HiringDataModel
 import com.ddaypunk.fetchrewardsexercise.hiring.data.repository.HiringDataRepository
@@ -22,57 +24,53 @@ import org.junit.jupiter.api.Test
 
 class MainScreenViewModelTest : ViewModelTest() {
     val mockRepository = mockk<HiringDataRepository>()
-    val mockData = ApiResponse.Success(
-        data = mapOf(
-            "1" to listOf(
-                HiringDataModel(
-                    id = 2,
-                    listId = 1,
-                    name = "Hello"
-                )
+    val mockData = mapOf(
+        "1" to listOf(
+            HiringDataModel(
+                id = 2,
+                listId = 1,
+                name = "Hello"
+            )
+        ),
+        "2" to listOf(
+            HiringDataModel(
+                id = 6,
+                listId = 2,
+                name = "Dude"
+            )
+        ),
+        "3" to listOf(
+            HiringDataModel(
+                id = 5,
+                listId = 3,
+                name = "Sup"
             ),
-            "2" to listOf(
-                HiringDataModel(
-                    id = 6,
-                    listId = 2,
-                    name = "Dude"
-                )
-            ),
-            "3" to listOf(
-                HiringDataModel(
-                    id = 5,
-                    listId = 3,
-                    name = "Sup"
-                ),
-                HiringDataModel(
-                    id = 4,
-                    listId = 3,
-                    name = "there"
-                )
+            HiringDataModel(
+                id = 4,
+                listId = 3,
+                name = "there"
             )
         )
     )
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Nested
-    @DisplayName("Given valid viewmodel with uiState at creation")
+    @DisplayName("Given repository success response")
     inner class GivenValidViewModelWithUiStateAtCreation {
+        private val mockResponse = ApiResponse.Success(mockData)
+
         @Test
-        fun `when UiState is initially retrieved, then Loading state should be returned`() =
+        fun `when viewmodel UiState initially retrieved, then Loading state should be returned`() =
             runTest {
                 val subject = MainScreenViewModel(mockRepository)
-                coEvery { mockRepository.retrieve() } returns mockData
+                coEvery { mockRepository.retrieve() } returns mockResponse
                 assertThat(subject.uiState.first()).isInstanceOf(UiState.Loading::class)
             }
-    }
 
-    @Nested
-    @DisplayName("Given valid viewmodel with uiState after initialization")
-    inner class GivenValidViewModelWithUiStateAfterInitialization {
-        @OptIn(ExperimentalCoroutinesApi::class)
         @Test
-        fun `when UiState is retrieved after complete initialization, then Ready state should be returned with expected data`() =
+        fun `when viewmodel UiState retrieved post initialization, then Ready state should be returned with expected data`() =
             runTest {
-                coEvery { mockRepository.retrieve() } returns mockData
+                coEvery { mockRepository.retrieve() } returns mockResponse
                 val subject = MainScreenViewModel(mockRepository)
 
                 advanceUntilIdle()
@@ -106,12 +104,11 @@ class MainScreenViewModelTest : ViewModelTest() {
                 }
             }
 
-        @OptIn(ExperimentalCoroutinesApi::class)
         @Test
-        fun `and UiState is retrieved after complete initialization, when expanding a card, then Ready state should be returned with expected data`() =
+        fun `and UiState retrieved post initialization, when expanding a card, then Ready state should be returned with expected data`() =
             runTest {
                 val subject = MainScreenViewModel(mockRepository)
-                coEvery { mockRepository.retrieve() } returns mockData
+                coEvery { mockRepository.retrieve() } returns mockResponse
 
                 advanceUntilIdle()
                 assertThat(subject.uiState.value).isInstanceOf(UiState.Ready::class)
@@ -121,6 +118,34 @@ class MainScreenViewModelTest : ViewModelTest() {
                 advanceUntilIdle()
                 cardOne = (subject.uiState.value as UiState.Ready).cardStates[0]
                 assertThat(cardOne.isExpanded).isTrue()
+            }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Nested
+    @DisplayName("Given repository error response")
+    inner class GivenRepoRetrievalError {
+        private val mockResponse = ApiResponse.Error<Map<String, List<HiringDataModel>>>(
+            DataClientException(DataClientError.SERVER_ERROR)
+        )
+
+        @Test
+        fun `when viewmodel UiState initially retrieved, then Loading state should be returned`() =
+            runTest {
+                val subject = MainScreenViewModel(mockRepository)
+                coEvery { mockRepository.retrieve() } returns mockResponse
+                assertThat(subject.uiState.first()).isInstanceOf(UiState.Loading::class)
+            }
+
+        @Test
+        fun `when viewmodel UiState retrieved post initialization, then Ready state should be returned with expected data`() =
+            runTest {
+                val subject = MainScreenViewModel(mockRepository)
+                coEvery { mockRepository.retrieve() } returns mockResponse
+
+                advanceUntilIdle()
+                val state = (subject.uiState.value as UiState.Error)
+                assertThat(state.error).isEqualTo("An error occurred when getting data from client: SERVER_ERROR")
             }
     }
 }
