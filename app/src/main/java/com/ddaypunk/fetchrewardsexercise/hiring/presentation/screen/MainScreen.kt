@@ -6,6 +6,7 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -48,12 +49,10 @@ fun MainScreenReady(
             modifier = Modifier
                 .padding(horizontal = 8.dp, vertical = 16.dp),
         ) {
-            cardStates.forEach { cardState ->
-                item {
-                    ExpandableListCard(
-                        state = cardState
-                    )
-                }
+            items(cardStates) {
+                ExpandableListCard(
+                    state = it
+                )
             }
         }
     }
