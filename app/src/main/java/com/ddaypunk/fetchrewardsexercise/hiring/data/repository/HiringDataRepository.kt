@@ -15,7 +15,7 @@ class HiringDataRepository @Inject constructor(
             val response = data.filter { item ->
                 !item.name.isNullOrBlank()
             }.sortedWith(
-                compareBy({ it.listId }, { it.name })
+                compareBy({ it.listId }, { it.id })
             )
                 .groupBy { item ->
                     item.listId.toString()
